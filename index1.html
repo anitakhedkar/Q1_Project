@@ -36,14 +36,15 @@
         </div>
       </div>
     </nav>
-    <form class="navbar-form navbar-left js-directions-form" role="search">
+    <form class="navbar-form navbar-left js-directions-form" role="search" id="myForm">
       <div class="form-group">
         <input type="text" id="startAddress" class="form-control" placeholder="Start">
         <input type="text" id="destinationAddress" class="form-control" placeholder="Destination">
 
       </div>
         <button type="submit" class="btn btn-primary js-directions">Submit</button>
-        <button type="submit" class="btn btn-primary" onclick="initMap()">Reset</button>
+        <!-- <button type="submit" class="btn btn-primary" onclick="initMap()">Reset</button> -->
+        <input type="submit" class="btn btn-primary js-reset" value="Reset form">
       <!-- traffic toggle button   -->
       <button type="button" class="btn btn-primary js-trafficToggle" data-toggle="button" aria-pressed="false" autocomplete="off"> TrafficLayer
       </button>
@@ -61,5 +62,6 @@
   <script src = "index1.js"></script>
   <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCQxIBupm3rX-ZqrjjxnMgxIKKlChQXO6w'>
   </script>
+
   </body>
 </html>

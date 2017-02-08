@@ -8,6 +8,14 @@
   var popup;
   var weatherMarkers;
 
+  // function reset(){
+  //    for (var i = 0; i < markers.length ; i++){
+  //      markers[i].setMapOnAll(null);
+  //      weatherMarkers[i].setMapOnAll(null);
+  //    }
+  // }
+
+  $(".js-reset").on('click',initMap);
 
   function initMap(){
       var mapOptions = {
@@ -89,11 +97,11 @@ function findTraffic(){
 
 
  function findWeather(){
-   for(var i = 0; i < markers.length; i++){
-     console.log('bla');
-     markers[i].setMap(null);
-     markers = [];
-   }
+// //trying to get the previous markers to hide.
+//    for(var i = 0; i < markers.length; i++){
+//      markers[i].setMap(null);
+//      markers = [];
+//    }
   for(i = 0; i < locationArray.length ; i++){
     var URL = 'http://api.openweathermap.org/data/2.5/weather?'+
     'lat='+locationArray[i].lat()+'&lon='+locationArray[i].lng() +
@@ -105,17 +113,15 @@ function findTraffic(){
 }
 
 function gotData(data){
-
-  console.log(data.weather[0].icon);
   var iconImgUrl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-  console.log("iconImgUrl:" + iconImgUrl);
   var marker = new google.maps.Marker({
      map:map,
      origin: new google.maps.Point(0, 0),
      clickable: true,
      anchor: new google.maps.Point(-17, 0),
      position: new google.maps.LatLng(data.coord.lat, data.coord.lon),
-     icon: iconImgUrl // null = default icon
+     icon: iconImgUrl, // null = default icon
+     zIndex:99999999 //to get the icon on the forefront
   });
   marker.setAnimation(google.maps.Animation.DROP);
   weatherMarkers.push(marker);
@@ -124,7 +130,7 @@ function gotData(data){
     position: new google.maps.LatLng(data.coord.lat, data.coord.lon)
   }
   var infoWindow = new google.maps.InfoWindow(infoWindowOptions);
-  infoWindow.open(map);
+  //infoWindow.open(map);
   google.maps.event.addListener(marker, 'click', function(){
     infoWindow.open(map, marker);
   })
