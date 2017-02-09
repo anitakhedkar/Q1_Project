@@ -9,13 +9,6 @@
   var weatherMarkers;
   var trafficLayer;
 
-  // function reset(){
-  //    for (var i = 0; i < markers.length ; i++){
-  //      markers[i].setMapOnAll(null);
-  //      weatherMarkers[i].setMapOnAll(null);
-  //    }
-  // }
-
   $(".js-reset").on('click',initMap);
 
   function initMap(){
@@ -46,9 +39,9 @@
   event.preventDefault();
   });
   $(".js-directions").on('click',findDirections);
-  //traffic toggle button
+
   $(".js-trafficToggle").on('click',findTraffic);
-  //weather toggle button
+
   $(".js-weatherToggle").on('click',findWeather);
 
   function findDirections(){
@@ -95,7 +88,7 @@ function placeMarkerOnMap(location){
   map.setZoom(12);
   markers.push(marker);
 }
-// //Something to do with traffic toggle button
+
 function findTraffic(){
   if(trafficLayer == null){
     trafficLayer = new google.maps.TrafficLayer();
