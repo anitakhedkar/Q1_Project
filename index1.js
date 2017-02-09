@@ -60,12 +60,12 @@
     function(result,status){
       if(status == google.maps.DirectionsStatus.OK){
         directionsRenderer.setDirections(result);
+        directionsRenderer.setPanel(document.getElementById('DirectionsListDiv'));
       } else{
         console.log("error");
       }
     });
   }
-
 
 function getGeoCode(addr){
   return new Promise(function(resolve,reject){
