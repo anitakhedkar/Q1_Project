@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+          html { height: 100% }
+          body { height: 100%; margin: 5px; }
+          #mymap { width: 100%; height: 95%; }
+          #MapContainerDiv { padding:10px; float:left; width: 60%; height: 600px;}
+          #DirectionsContainerDiv { padding:5px; float:right; width: 40%; height: 600px;}
+          #DirectionsListDiv {overflow-y: auto; max-height:300px;}
+          ul.addressList {list-style-type:circle;}
+          #img{float:center;}
+          .container-fluid{margin:0px;background:black;}
+
+    </style>
+    <!-- <meta charset="utf-8"> -->
     <title>Weather Traffic Go To place</title>
     <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -18,44 +31,62 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
 <!-- end stuff required for toggle button -->
-
+<!--
 <style type="text/css">
     html { height: 100% }
     body { height: 80%; margin: 0; }
     #mymap { width: 100%; height: 100%; }
-</style>
+</style> -->
 
   </head>
   <body onload="initMap();">
     <nav class="navbar navbar-default">
+      <button type="submit" class="btn btn-primary help col-xs-offset-10 col-xs-2">HELP</button>
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">
-            <img alt="Brand" src="#">
+            <img alt="Brand" id="img" style="width:300px;height:50px;"  src="Logomakr_1hry7Z.png">
           </a>
         </div>
       </div>
     </nav>
-    <form class="navbar-form navbar-left js-directions-form" role="search" id="myForm">
+
+  <div id = "containerDiv">
+    <div id="MapContainerDiv">
+      <div id="mymap">
+      </div>
+    </div>
+    <div id="DirectionsContainerDiv">
+      <div id="PlacesContainerDiv">
+        <b>Get Directions Between your Places</b></br>
+
+        <form class="js-directions-form" role="search" id="myForm">
       <div class="form-group">
-        <input type="text" id="startAddress" class="form-control" placeholder="Start">
-        <input type="text" id="destinationAddress" class="form-control" placeholder="Destination">
+        <input type="text" id="startAddress" class="form-control" placeholder="Start" onfocus="if(this.value=='Start') this.value='';">
+        <input type="text" id="destinationAddress" class="form-control" placeholder="Destination" onfocus="if(this.value=='Destination') this.value='';">
 
       </div>
         <button type="submit" class="btn btn-primary js-directions">Submit</button>
-        <!-- <button type="submit" class="btn btn-primary" onclick="initMap()">Reset</button> -->
         <input type="submit" class="btn btn-primary js-reset" value="Reset form">
       <!-- traffic toggle button   -->
-      <button type="button" class="btn btn-primary js-trafficToggle" data-toggle="button" aria-pressed="false" autocomplete="off"> TrafficLayer
+      <button type="button" class="btn btn-primary js-trafficToggle"
+      data-toggle="button" aria-pressed="false" autocomplete="off"> TrafficLayer
       </button>
+
       <!-- end traffic toggle button     -->
       <!-- weather toggle button   -->
       <button type="button" class="btn btn-primary js-weatherToggle" data-toggle="button" aria-pressed="false" autocomplete="off"> WeatherLayer
       </button>
       <!-- end weather toggle button     -->
     </form>
+  </div>
+  <div id="DirectionsListContainerDiv">
+    <div id="DirectionsListDiv">
+    </div>
+  </div>
+  </div>
+  </div>
 
-      <div id="mymap"></div>
 
     <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
