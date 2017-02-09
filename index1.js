@@ -33,7 +33,13 @@
       markers = [];
       weatherMarkers = [];
       directionsService = new google.maps.DirectionsService();
-      directionsRenderer = new google.maps.DirectionsRenderer();
+      if(directionsRenderer == null)
+        directionsRenderer = new google.maps.DirectionsRenderer();
+      else {
+        directionsRenderer.setMap(null);
+        directionsRenderer.setPanel(null);
+      }
+
   }
 
   $(".js-directions-form").on('submit',function(event){
