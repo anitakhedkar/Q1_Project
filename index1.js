@@ -8,12 +8,19 @@
   var popup;
   var weatherMarkers;
   var trafficLayer;
+  var wayPointArray;
+  var addressArray;
+  var geoCodeArray;
+  var wayPointnewArray;
 
   $(".js-reset").on('click',initMap);
 
   function initMap(){
      document.getElementById("destinationAddress").value = "Destination";
      document.getElementById("startAddress").value = "Start";
+     //document.getElementById("wayPointAddress").placeholder = "Stopover";
+     document.getElementById('stopoverList').innerHTML = "";
+
       var mapOptions = {
         center : new google.maps.LatLng(39.73, -104.99),
         zoom : 10
@@ -25,6 +32,12 @@
 
       markers = [];
       weatherMarkers = [];
+      wayPointArray = [];
+      addressArray = [];
+      geoCodeArray = [];
+      wayPointnewArray = [];
+      weatherlocations = [];
+
       directionsService = new google.maps.DirectionsService();
       if(directionsRenderer == null)
         directionsRenderer = new google.maps.DirectionsRenderer();
@@ -44,27 +57,84 @@
 
   $(".js-weatherToggle").on('click',findWeather);
 
+  $(".js-waypoint").on('click',makeWayPointArray);
+
+
+  function makeWayPointArray(){
+    var waypoint = document.getElementById("wayPointAddress").value;
+    // document.getElementById("wayPointAddress").value = "Stopover";
+    document.getElementById("wayPointAddress").value = "";
+
+    wayPointArray.push(waypoint);
+    displayWaypoint(waypoint);
+  }
+
+  function displayWaypoint(waypoint){
+    var stopoverListDiv = document.getElementById('stopoverList');
+    if(document.getElementById('stopoverList').innerHTML === ""){
+      stopoverListDiv.appendChild(document.createTextNode('Via: '));
+    }
+    stopoverListDiv.appendChild(document.createTextNode(waypoint));
+    stopoverListDiv.appendChild(document.createTextNode(', '));
+  }
+
   function findDirections(){
     var start = document.getElementById("startAddress").value;
     var destination = document.getElementById("destinationAddress").value;
+    addressArray.push(start);
+    addressArray.push(destination);
+    for(var i = 0; i < wayPointArray.length; i++){
+      addressArray.push(wayPointArray[i]);
+    }
 
-    Promise.all([getGeoCode(start),getGeoCode(destination)])
-      .then(getDirection);
+    function getCodeArray(){
+      for(var i = 0; i < addressArray.length; i++){
+        var geoCode = getGeoCode(addressArray[i]);
+        geoCodeArray.push(geoCode);
+      }
+      return geoCodeArray;
+    }
+    Promise.all(getCodeArray())
+          .then(getDirection);
   }
 
   function getDirection(locations){
     locationArray = locations;
-    directionsRenderer.setMap(map);
-    directionsService.route({'origin':locations[0],'destination':locations[1],'travelMode':google.maps.TravelMode.DRIVING},
-    function(result,status){
-      if(status == google.maps.DirectionsStatus.OK){
-        directionsRenderer.setDirections(result);
-        directionsRenderer.setPanel(document.getElementById('DirectionsListDiv'));
-      } else{
-        console.log("error");
+    if(locationArray.length > 2){
+      //the following line takes out the first two elements(start and destination) and returns the remainsing array of waypoints.
+      var waypointLocations = locations.slice(2,locations.length);
+      var directionsWaypointArray = [];
+      for(var i = 0; i < waypointLocations.length; i++){
+        directionsWaypointArray.push({location : waypointLocations[i],
+                                      stopover : true});
       }
-    });
+      directionsRenderer.setMap(map);
+      directionsService.route({'origin':locations[0],'destination':locations[1],'waypoints':directionsWaypointArray,'optimizeWaypoints': true,'travelMode':google.maps.TravelMode.DRIVING},
+      function(result,status){
+        if(status == google.maps.DirectionsStatus.OK){
+          directionsRenderer.setDirections(result);
+          directionsRenderer.setPanel(document.getElementById('DirectionsListDiv'));
+        } else{
+          console.log("error");
+        }
+      });
+    }
+    else {
+      directionsRenderer.setMap(map);
+      directionsService.route({'origin':locations[0],'destination':locations[1],'travelMode':google.maps.TravelMode.DRIVING},
+      function(result,status){
+        if(status == google.maps.DirectionsStatus.OK){
+          console.log(result);
+          directionsRenderer.setDirections(result);
+          directionsRenderer.setPanel(document.getElementById('DirectionsListDiv'));
+        } else{
+            console.log("error");
+        }
+      });
   }
+}
+
+
 
 function getGeoCode(addr){
   return new Promise(function(resolve,reject){
@@ -111,7 +181,6 @@ function findTraffic(){
         }
    }
    else if(weatherMarkers.length > 0){
-     console.log("calling toggleWeatherMap");
      toggleWeatherMap();
    }
 }

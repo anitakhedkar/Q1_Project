@@ -5,14 +5,14 @@
     <style type="text/css">
           html { height: 100% }
           body { height: 100%; margin: 5px; }
-          #mymap { width: 100%; height: 95%; }
+          #mymap { width: 100%; height: 100%; }
           #MapContainerDiv { padding:10px; float:left; width: 60%; height: 600px;}
           #DirectionsContainerDiv { padding:5px; float:right; width: 40%; height: 600px;}
           #DirectionsListDiv {overflow-y: auto; max-height:300px;}
           ul.addressList {list-style-type:circle;}
           #img{float:center;}
-          .container-fluid{margin:0px;background:black;}
-
+          .container-fluid{margin:0px;background:black;height:50px;}
+          .navbar-brand{height:0px;}
     </style>
     <!-- <meta charset="utf-8"> -->
     <title>Weather Traffic Go To place</title>
@@ -24,30 +24,23 @@
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<!-- Stuff required for toggle button -->
+
 <script src = 'jqtouch.js'></script>
 <script src="jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/bootstrap-responsive.css" rel="stylesheet">
-<!-- end stuff required for toggle button -->
-<!--
-<style type="text/css">
-    html { height: 100% }
-    body { height: 80%; margin: 0; }
-    #mymap { width: 100%; height: 100%; }
-</style> -->
 
   </head>
   <body onload="initMap();">
     <nav class="navbar navbar-default">
       <button type="submit" class="btn btn-primary help col-xs-offset-10 col-xs-2">HELP</button>
       <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">
+        <!-- <div class="navbar-header"> -->
+          <!-- <a class="navbar-brand" href="#"> -->
             <img alt="Brand" id="img" style="width:300px;height:50px;"  src="Logomakr_1hry7Z.png">
-          </a>
-        </div>
+          <!-- </a> -->
+        <!-- </div> -->
       </div>
     </nav>
 
@@ -64,18 +57,24 @@
       <div class="form-group">
         <input type="text" id="startAddress" class="form-control" placeholder="Start" onfocus="if(this.value=='Start') this.value='';">
         <input type="text" id="destinationAddress" class="form-control" placeholder="Destination" onfocus="if(this.value=='Destination') this.value='';">
+        <br>
+        <b> Enter a stopover, if any, and hit ADD</b> &nbsp; &nbsp;<button type="submit" class="btn btn-primary js-waypoint">ADD</button>
+        <!-- <input type="text" id="wayPointAddress" class="form-control" placeholder="Stopover" onfocus="if(this.value=='Stopover') this.value='';"> -->
+          <input type="text" id="wayPointAddress" class="form-control">
 
       </div>
+      <div id="stopoverList">
+      </div>
         <button type="submit" class="btn btn-primary js-directions">Submit</button>
-        <input type="submit" class="btn btn-primary js-reset" value="Reset form">
+        <input type="submit" class="btn btn-primary js-reset" value="Reset">
       <!-- traffic toggle button   -->
       <button type="button" class="btn btn-primary js-trafficToggle"
-      data-toggle="button" aria-pressed="false" autocomplete="off"> TrafficLayer
+      data-toggle="button" aria-pressed="false" autocomplete="off"> Show Traffic
       </button>
 
       <!-- end traffic toggle button     -->
       <!-- weather toggle button   -->
-      <button type="button" class="btn btn-primary js-weatherToggle" data-toggle="button" aria-pressed="false" autocomplete="off"> WeatherLayer
+      <button type="button" class="btn btn-primary js-weatherToggle" data-toggle="button" aria-pressed="false" autocomplete="off"> Show Weather
       </button>
       <!-- end weather toggle button     -->
     </form>
@@ -93,8 +92,9 @@
 
     <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <script src = "index1.js"></script>
+  <!-- <script src = "index1.js"></script> -->
   <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCQxIBupm3rX-ZqrjjxnMgxIKKlChQXO6w'>
   </script>
+  <script src = "index1.js"></script>
   </body>
 </html>
