@@ -176,7 +176,7 @@ function findTraffic(){
         for(i = 0; i < locationArray.length ; i++){
           var URL = 'http://api.openweathermap.org/data/2.5/weather?'+
           'lat='+locationArray[i].lat()+'&lon='+locationArray[i].lng() +
-          '&units=metric&APPID=32ba66921dd068c08810dbf7575a9488';
+          '&units=imperial&APPID=32ba66921dd068c08810dbf7575a9488';
           map.data.loadGeoJson($.getJSON(URL, gotData));
         }
    }
@@ -208,7 +208,7 @@ function gotData(data){
   marker.setAnimation(google.maps.Animation.DROP);
   weatherMarkers.push(marker);
   var infoWindowOptions = {
-    content: data.weather[0].description + ' Temp: ' + data.main.temp + ' deg C',
+    content: data.weather[0].description + ' Temp: ' + data.main.temp + ' deg F',
     position: new google.maps.LatLng(data.coord.lat, data.coord.lon)
   }
   var infoWindow = new google.maps.InfoWindow(infoWindowOptions);
